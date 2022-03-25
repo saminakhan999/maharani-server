@@ -13,6 +13,9 @@ module.exports = class Highscore {
     this.streak = data.streak;
     this.subhighscores = data.subhighscores;
     this.highscoreId = data.id;
+    this.game = data.game;
+    this.score = data.score;
+    this.username = data.username;
     
   }
 
