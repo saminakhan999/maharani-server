@@ -63,6 +63,22 @@ module.exports = class Highscore {
     });
   }
 
+  static create(game, score, username) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let user = await User.findOrCreateByName(username);
+        let result = await db.query(
+          `INSERT INTO highscores (game, score, user_id) VALUES ($1, $2, $3) RETURNING *;`,
+          [game, score, user.highscoreId]
+        );
+        console.log(result.rows[0]);
+        resolve(result.rows[0]);
+      } catch (err) {
+        reject("Error creating highscore");
+      }
+    });
+  }
+
   static findByHighscore(id) {
     return new Promise(async (resolve, reject) => {
       try {
