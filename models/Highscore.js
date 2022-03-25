@@ -16,7 +16,21 @@ module.exports = class Highscore {
     this.game = data.game;
     this.score = data.score;
     this.username = data.username;
-    
+  }
+
+  static get all() {
+    return new Promise(async (res, rej) => {
+      try {
+        let result =
+          await db.query(`SELECT highscores.*, users.username as username
+                                                    FROM highscores 
+                                                    JOIN users ON highscores.user_id = users.highscoreId;`);
+        let highscores = result.rows.map((r) => new Highscore(r));
+        res(highscores);
+      } catch (err) {
+        rej(`Error retrieving highscores: ${err}`);
+      }
+    });
   }
 
   static findByUser(id) {
