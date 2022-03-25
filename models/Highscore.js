@@ -51,26 +51,14 @@ module.exports = class Highscore {
   static findByUser(id) {
     return new Promise(async (resolve, reject) => {
       try {
-        // get all highscore data matching that user id
-        let highscoreData = await db.query(
-          `SELECT * FROM highscores WHERE user_id = $1;`,
+        let highscoresData = await db.query(
+          `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.highscoreId WHERE userId = $1;`,
           [id]
         );
-        highscoreData = highscoreData.rows;
-        for (let data of highscoreData) {
-          // get the subhighscores that match the highscore id
-          const subData = await findSubhighscores(data.id);
-          if (subData.length) data.subhighscores = subData;
-          // get the frequency that match the highscore id
-          const frequencyData = await findFrequency(data.frequency_id);
-          if (frequencyData.length) data.frequency = frequencyData;
-        }
-        let highscores = highscoreData.map((h) => {
-          return new Highscore(h);
-        });
+        const highscores = highscoresData.rows.map((d) => new Highscore(d));
         resolve(highscores);
       } catch (err) {
-        reject("User not found");
+        reject("Error retrieving user's highscores");
       }
     });
   }
