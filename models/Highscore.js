@@ -22,20 +22,20 @@ module.exports = class Highscore {
     this.username = data.username;
   }
 
-  static get all() {
-    return new Promise(async (res, rej) => {
-      try {
-        let result =
-          await db.query(`SELECT highscores.*, users.username as username
-                                                    FROM highscores 
-                                                    JOIN users ON highscores.user_id = users.id;`);
-        let highscores = result.rows.map((r) => new Highscore(r));
-        res(highscores);
-      } catch (err) {
-        rej(`Error retrieving highscores: ${err}`);
-      }
-    });
-  }
+  // static get all() {
+  //   return new Promise(async (res, rej) => {
+  //     try {
+  //       let result =
+  //         await db.query(`SELECT highscores.*, users.username as username
+  //                                                   FROM highscores 
+  //                                                   JOIN users ON highscores.user_id = users.id;`);
+  //       let highscores = result.rows.map((r) => new Highscore(r));
+  //       res(highscores);
+  //     } catch (err) {
+  //       rej(`Error retrieving highscores: ${err}`);
+  //     }
+  //   });
+  // }
 
   static findByUser(id) {
     return new Promise(async (resolve, reject) => {
