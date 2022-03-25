@@ -5,9 +5,6 @@ const {
   frequencyDuplicates,
 } = require("./helpers");
 
-
-const User = require("./User");
-
 module.exports = class Highscore {
   constructor(data) {
     this.name = data.name;
@@ -16,26 +13,8 @@ module.exports = class Highscore {
     this.streak = data.streak;
     this.subhighscores = data.subhighscores;
     this.highscoreId = data.id;
-    this.id = data.id;
-    this.game = data.game;
-    this.score = data.score;
-    this.username = data.username;
+    
   }
-
-  // static get all() {
-  //   return new Promise(async (res, rej) => {
-  //     try {
-  //       let result =
-  //         await db.query(`SELECT highscores.*, users.username as username
-  //                                                   FROM highscores 
-  //                                                   JOIN users ON highscores.user_id = users.id;`);
-  //       let highscores = result.rows.map((r) => new Highscore(r));
-  //       res(highscores);
-  //     } catch (err) {
-  //       rej(`Error retrieving highscores: ${err}`);
-  //     }
-  //   });
-  // }
 
   static findByUser(id) {
     return new Promise(async (resolve, reject) => {
