@@ -5,6 +5,8 @@ const {
   frequencyDuplicates,
 } = require("./helpers");
 
+const User = require("./User");
+
 module.exports = class Highscore {
   constructor(data) {
     this.name = data.name;
