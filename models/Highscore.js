@@ -33,6 +33,21 @@ module.exports = class Highscore {
     });
   }
 
+  static findById(id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let highscoreData = await db.query(
+          `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.highscoreId WHERE highscores.highscoreId = $1;`,
+          [id]
+        );
+        let highscore = new Highscore(highscoreData.rows[0]);
+        resolve(highscore);
+      } catch (err) {
+        reject("Highscore not found");
+      }
+    });
+  }
+
   static findByUser(id) {
     return new Promise(async (resolve, reject) => {
       try {
