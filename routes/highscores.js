@@ -7,6 +7,6 @@ router.post("/", highscoresController.create);
 router.delete("/:highscore_id", highscoresController.destroy);
 router.put("/:highscore_id", highscoresController.update);
 router.patch("/:highscore_id", highscoresController.update);
-router.get("/hab_id/:highscore_id", highscoresController.showHab);
+router.get("/high_id/:highscore_id", highscoresController.showHigh);
 
 module.exports = router;

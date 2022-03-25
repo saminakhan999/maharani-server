@@ -9,7 +9,7 @@ async function show(req, res) {
   }
 }
 
-async function showHab(req, res) {
+async function showHigh(req, res) {
   try {
     const highscore = await Highscore.findByHighscore(req.params.highscore_id);
     res.status(200).json(highscore);
@@ -46,4 +46,4 @@ async function update(req, res) {
   }
 }
 
-module.exports = { show, create, destroy, update, showHab };
+module.exports = { show, create, destroy, update, showHigh };
