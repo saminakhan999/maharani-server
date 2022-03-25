@@ -2,11 +2,38 @@ const express = require("express");
 const router = express.Router();
 const highscoresController = require("../controllers/highscores");
 
-router.get("/:user_id", highscoresController.show);
-router.post("/", highscoresController.create);
-router.delete("/:highscore_id", highscoresController.destroy);
-router.put("/:highscore_id", highscoresController.update);
-router.patch("/:highscore_id", highscoresController.update);
-router.get("/high_id/:highscore_id", highscoresController.showHigh);
+const Highscore = require("../models/highscore");
+
+router.get("/", async (req, res) => {
+  try {
+    const highscores = await Highscore.all;
+    res.json(highscores);
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const highscore = await Highscore.findById(req.params.id);
+    res.status(200).json(highscore);
+  } catch (err) {
+    res.status(404).json({ err });
+  }
+});
+
+// Create highscore route
+router.post("/", async (req, res) => {
+  try {
+    const highscore = await Highscore.create(
+      req.body.game,
+      req.body.score,
+      req.body.username
+    );
+    res.json(highscore);
+  } catch (err) {
+    res.status(404).json({ err });
+  }
+});
 
 module.exports = router;
