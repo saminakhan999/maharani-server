@@ -1,15 +1,15 @@
 const db = require("../dbConfig/init");
 
-const findSubhabits = (habit_id) => {
+const findSubhighscores = (highscore_id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let subhabitData = await db.query(
-        `SELECT name, complete FROM subhabits WHERE habit_id = $1;`,
-        [habit_id]
+      let subhighscoreData = await db.query(
+        `SELECT name, complete FROM subhighscores WHERE highscore_id = $1;`,
+        [highscore_id]
       );
-      resolve(subhabitData.rows);
+      resolve(subhighscoreData.rows);
     } catch (err) {
-      reject("Subhabit not found");
+      reject("Subhighscore not found");
     }
   });
 };
@@ -76,4 +76,4 @@ const frequencyDuplicates = async (frequencyCheck) => {
   return frequency_id;
 };
 
-module.exports = { findSubhabits, findFrequency, frequencyDuplicates };
+module.exports = { findSubhighscores, findFrequency, frequencyDuplicates };

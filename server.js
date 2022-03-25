@@ -5,10 +5,10 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-const habitsRoutes = require("./routes/habits");
+const highscoresRoutes = require("./routes/highscores");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
-server.use("/habits", habitsRoutes);
+server.use("/highscores", highscoresRoutes);
 server.use("/auth", authRoutes);
 server.use("/users", userRoutes);
 
