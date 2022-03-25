@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const highscoresController = require("../controllers/highscores");
 
-const Highscore = require("../models/highscore");
+const Highscore = require("../models/Highscore");
 
 router.get("/", async (req, res) => {
   try {
