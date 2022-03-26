@@ -5,7 +5,7 @@ const User = require('./user')
 
 module.exports = class Highscore {
   constructor(data) {
-    this.highscoreId = data.id;
+    this.id = data.id;
     this.game = data.game;
     this.score = data.score;
     this.username = data.username;
@@ -17,7 +17,7 @@ module.exports = class Highscore {
         let result =
           await db.query(`SELECT highscores.*, users.username as username
                                                     FROM highscores 
-                                                    JOIN users ON highscores.user_id = users.highscoreId ORDER BY score DESC;`);
+                                                    JOIN users ON highscores.user_id = users.id ORDER BY score DESC;`);
         let highscores = result.rows.map((r) => new Highscore(r));
         res(highscores);
       } catch (err) {
@@ -30,7 +30,7 @@ module.exports = class Highscore {
     return new Promise(async (resolve, reject) => {
       try {
         let highscoreData = await db.query(
-          `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.highscoreId WHERE highscores.highscoreId = $1;`,
+          `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.id WHERE highscores.id= $1;`,
           [id]
         );
         let highscore = new Highscore(highscoreData.rows[0]);
@@ -45,7 +45,7 @@ module.exports = class Highscore {
     return new Promise(async (resolve, reject) => {
       try {
         let highscoresData = await db.query(
-          `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.highscoreId WHERE userId = $1;`,
+          `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.id WHERE userId = $1;`,
           [id]
         );
         const highscores = highscoresData.rows.map((d) => new Highscore(d));
@@ -62,7 +62,7 @@ module.exports = class Highscore {
         let user = await User.findOrCreateByName(username);
         let result = await db.query(
           `INSERT INTO highscores (game, score, user_id) VALUES ($1, $2, $3) RETURNING *;`,
-          [game, score, user.highscoreId]
+          [game, score, user.id]
         );
         console.log(result.rows[0]);
         resolve(result.rows[0]);
