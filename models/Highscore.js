@@ -17,7 +17,7 @@ module.exports = class Highscore {
         let result =
           await db.query(`SELECT highscores.*, users.username as username
                                                     FROM highscores 
-                                                    JOIN users ON highscores.user_id = users.highscoreId;`);
+                                                    JOIN users ON highscores.user_id = users.highscoreId ORDER BY score DESC;`);
         let highscores = result.rows.map((r) => new Highscore(r));
         res(highscores);
       } catch (err) {
