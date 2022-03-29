@@ -79,7 +79,7 @@ module.exports = class Highscore {
           `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.id WHERE highscores.game= $1;`,
           [game]
         );
-        let highscore = new Highscore(highscoreData.rows[0]);
+        let highscore = new Highscore(highscoreData);
         resolve(highscore);
       } catch (err) {
         reject("Highscores not found");
