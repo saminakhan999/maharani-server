@@ -76,7 +76,7 @@ module.exports = class Highscore {
     return new Promise(async (resolve, reject) => {
       try {
         let highscoreData = await db.query(
-          `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.id WHERE highscores.game= $1;`,
+          `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.id WHERE highscores.game= $1 ORDER BY highscores.score DESC;`,
           [game]
         );
         let highscore = highscoreData.rows.map((d) => new Highscore(d));
