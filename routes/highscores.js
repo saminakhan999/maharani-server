@@ -21,6 +21,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+
+router.get("/games/:game", async (req, res) => {
+  try {
+    const highscores = await Highscore.findByGame(req.params.game);
+    res.status(200).json(highscores);
+  } catch (err) {
+    res.status(404).json({ err });
+  }
+});
+
+
+
 // Create highscore route
 router.post("/", async (req, res) => {
   try {

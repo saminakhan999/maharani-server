@@ -71,4 +71,19 @@ module.exports = class Highscore {
       }
     });
   }
+
+  static findByGame(game) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let highscoreData = await db.query(
+          `SELECT highscores.*, users.username AS username FROM highscores JOIN users ON highscores.user_id = users.id WHERE highscores.game= $1;`,
+          [game]
+        );
+        let highscore = new Highscore(highscoreData.rows[0]);
+        resolve(highscore);
+      } catch (err) {
+        reject("Highscores not found");
+      }
+    });
+  }
 };
